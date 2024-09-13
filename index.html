@@ -76,32 +76,53 @@
 <ul id="todo-list"></ul>
 
 <script>
+    // Function to load To-Dos from localStorage and display them
+    function loadToDos() {
+        const todoList = document.getElementById('todo-list');
+        todoList.innerHTML = '';  // Clear the list first
+        const todos = JSON.parse(localStorage.getItem('todos')) || [];  // Get To-Dos from localStorage
+
+        todos.forEach((todo, index) => {
+            const newTodo = document.createElement('li');
+            newTodo.textContent = todo;
+
+            const doneButton = document.createElement('button');
+            doneButton.textContent = "Erledigt";
+            doneButton.classList.add('done-btn');
+            doneButton.onclick = function() {
+                removeTodo(index);  // Remove the To-Do from the list
+            };
+
+            newTodo.appendChild(doneButton);
+            todoList.appendChild(newTodo);
+        });
+    }
+
+    // Function to add a new To-Do
     function addTodo() {
         const input = document.getElementById('todo-input');
         const todoText = input.value.trim();
 
         if (todoText !== "") {
-            const todoList = document.getElementById('todo-list');
-
-            // Neues To-Do Element
-            const newTodo = document.createElement('li');
-            newTodo.textContent = todoText;
-
-            // "Erledigt" Button erstellen
-            const doneButton = document.createElement('button');
-            doneButton.textContent = "Erledigt";
-            doneButton.classList.add('done-btn');
-            doneButton.onclick = function() {
-                todoList.removeChild(newTodo); // To-Do löschen
-            };
-
-            // Button zum To-Do hinzufügen
-            newTodo.appendChild(doneButton);
-            todoList.appendChild(newTodo);
-
-            // Eingabefeld leeren
-            input.value = "";
+            const todos = JSON.parse(localStorage.getItem('todos')) || [];
+            todos.push(todoText);  // Add new To-Do to the list
+            localStorage.setItem('todos', JSON.stringify(todos));  // Save To-Dos to localStorage
+            loadToDos();  // Reload the list
+            input.value = "";  // Clear the input field
         }
+    }
+
+    // Function to remove a To-Do
+    function removeTodo(index) {
+        const todos = JSON.parse(localStorage.getItem('todos')) || [];
+        todos.splice(index, 1);  // Remove the To-Do at the given index
+        localStorage.setItem('todos', JSON.stringify(todos));  // Save updated list to localStorage
+        loadToDos();  // Reload the list
+    }
+
+    // Load To-Dos when the page is loaded
+    window.onload = function() {
+        loadToDos();
     }
 </script>
 
