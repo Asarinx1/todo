@@ -47,6 +47,20 @@
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .done-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .done-btn:hover {
+            background-color: #c82333;
         }
     </style>
 </head>
@@ -68,10 +82,25 @@
 
         if (todoText !== "") {
             const todoList = document.getElementById('todo-list');
+
+            // Neues To-Do Element
             const newTodo = document.createElement('li');
             newTodo.textContent = todoText;
+
+            // "Erledigt" Button erstellen
+            const doneButton = document.createElement('button');
+            doneButton.textContent = "Erledigt";
+            doneButton.classList.add('done-btn');
+            doneButton.onclick = function() {
+                todoList.removeChild(newTodo); // To-Do löschen
+            };
+
+            // Button zum To-Do hinzufügen
+            newTodo.appendChild(doneButton);
             todoList.appendChild(newTodo);
-            input.value = ""; // Textfeld leeren
+
+            // Eingabefeld leeren
+            input.value = "";
         }
     }
 </script>
