@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meine To-Dos</title>
+    <title>To-Do Liste</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,6 +13,29 @@
         }
         h1 {
             text-align: center;
+        }
+        #todo-form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            margin-left: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
         }
         ul {
             list-style-type: none;
@@ -28,10 +51,30 @@
     </style>
 </head>
 <body>
-    <h1>Meine To-Dos</h1>
-    <ul id="todo-list">
-        <li>To-Do 1</li>
-        <li>To-Do 2</li>
-    </ul>
+
+<h1>Meine To-Dos</h1>
+
+<div id="todo-form">
+    <input type="text" id="todo-input" placeholder="Neues To-Do eingeben">
+    <button onclick="addTodo()">Hinzufügen</button>
+</div>
+
+<ul id="todo-list"></ul>
+
+<script>
+    function addTodo() {
+        const input = document.getElementById('todo-input');
+        const todoText = input.value.trim();
+
+        if (todoText !== "") {
+            const todoList = document.getElementById('todo-list');
+            const newTodo = document.createElement('li');
+            newTodo.textContent = todoText;
+            todoList.appendChild(newTodo);
+            input.value = ""; // Textfeld leeren
+        }
+    }
+</script>
+
 </body>
 </html>
